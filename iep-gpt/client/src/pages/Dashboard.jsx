@@ -3,9 +3,25 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import StudentForm from '../components/StudentForm';
 import IEPPlanDisplay from '../components/IEPPlanDisplay';
+import ProgressTracker from '../components/ProgressTracker';
+import CalendarView from '../components/CalendarView';
+import ResourceLibrary from '../components/ResourceLibrary';
 import Loader from '../components/Loader';
-import { generateIEPPlan, getStudentProfiles, getStudentProfile } from '../services/api';
-import { FaPlus, FaUser, FaCalendarAlt, FaChartLine } from 'react-icons/fa';
+import { 
+  generateIEPPlan, 
+  getStudentProfiles, 
+  getStudentProfile,
+  generateAdaptedPlan
+} from '../services/api';
+import { 
+  FaPlus, 
+  FaUser, 
+  FaCalendarAlt, 
+  FaChartLine, 
+  FaBook,
+  FaLightbulb,
+  FaCog
+} from 'react-icons/fa';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +36,7 @@ const Dashboard = () => {
     largeText: false,
     reducedMotion: false
   });
+  const [progressData, setProgressData] = useState(null);
 
   // Fetch student profiles on component mount
   useEffect(() => {
@@ -43,6 +60,13 @@ const Dashboard = () => {
       const plan = await generateIEPPlan(formData);
       setIepPlan(plan);
       setActiveTab('view-plan');
+      
+      // Update selected student with the new data
+      setSelectedStudent({
+        ...formData,
+        id: plan.id,
+        latestPlan: plan
+      });
     } catch (err) {
       setError('Failed to generate learning plan. Please try again.');
       console.error(err);
@@ -77,6 +101,27 @@ const Dashboard = () => {
     setIepPlan(null);
     setSelectedStudent(null);
     setActiveTab('create');
+  };
+
+  const handleProgressUpdate = async (progressData) => {
+    setProgressData(progressData);
+    
+    if (selectedStudent && progressData) {
+      setIsLoading(true);
+      setError(null);
+      
+      try {
+        // Generate an adapted plan based on progress
+        const adaptedPlan = await generateAdaptedPlan(selectedStudent.id);
+        setIepPlan(adaptedPlan);
+        setActiveTab('view-plan');
+      } catch (err) {
+        setError('Failed to generate adapted plan. Please try again.');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   const toggleAccessibilityMenu = () => {
@@ -135,6 +180,22 @@ const Dashboard = () => {
                     <FaChartLine /> Progress Tracking
                   </button>
                 </li>
+                <li>
+                  <button 
+                    className={`sidebar-button ${activeTab === 'resources' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('resources')}
+                  >
+                    <FaBook /> Resource Library
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    className={`sidebar-button ${activeTab === 'tips' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('tips')}
+                  >
+                    <FaLightbulb /> Teaching Tips
+                  </button>
+                </li>
               </ul>
             </div>
             
@@ -163,7 +224,7 @@ const Dashboard = () => {
                 className="accessibility-button"
                 onClick={toggleAccessibilityMenu}
               >
-                Accessibility Options
+                <FaCog /> Accessibility Options
               </button>
               
               {showAccessibilityMenu && (
@@ -218,12 +279,20 @@ const Dashboard = () => {
                 {activeTab === 'view-plan' && iepPlan && (
                   <div className="plan-container">
                     <IEPPlanDisplay plan={iepPlan} />
-                    <button 
-                      className="new-plan-button"
-                      onClick={handleCreateNewPlan}
-                    >
-                      Create New Plan
-                    </button>
+                    <div className="plan-actions-container">
+                      <button 
+                        className="new-plan-button"
+                        onClick={handleCreateNewPlan}
+                      >
+                        Create New Plan
+                      </button>
+                      <button 
+                        className="track-progress-button"
+                        onClick={() => setActiveTab('progress')}
+                      >
+                        <FaChartLine /> Track Progress
+                      </button>
+                    </div>
                   </div>
                 )}
                 
@@ -255,16 +324,51 @@ const Dashboard = () => {
                 {activeTab === 'calendar' && (
                   <div className="calendar-container">
                     <h2>Calendar View</h2>
-                    <p className="coming-soon">Calendar view with drag-and-drop functionality coming soon!</p>
-                    {/* Calendar component would be implemented here */}
+                    {iepPlan ? (
+                      <CalendarView 
+                        learningPlan={iepPlan}
+                        onEditActivity={(editData) => console.log('Edit activity:', editData)}
+                      />
+                    ) : (
+                      <p className="no-data-message">Select a student with a learning plan to view their calendar.</p>
+                    )}
                   </div>
                 )}
                 
                 {activeTab === 'progress' && (
                   <div className="progress-container">
                     <h2>Progress Tracking</h2>
-                    <p className="coming-soon">Progress tracking and reporting features coming soon!</p>
-                    {/* Progress tracking component would be implemented here */}
+                    {selectedStudent && iepPlan ? (
+                      <ProgressTracker 
+                        studentId={selectedStudent.id}
+                        learningPlan={iepPlan}
+                        onProgressUpdate={handleProgressUpdate}
+                      />
+                    ) : (
+                      <p className="no-data-message">Select a student with a learning plan to track progress.</p>
+                    )}
+                  </div>
+                )}
+                
+                {activeTab === 'resources' && (
+                  <div className="resources-container">
+                    <h2>Resource Library</h2>
+                    {selectedStudent ? (
+                      <ResourceLibrary 
+                        studentId={selectedStudent.id}
+                        diagnosis={selectedStudent.diagnosis}
+                      />
+                    ) : (
+                      <p className="no-data-message">Select a student to view relevant educational resources.</p>
+                    )}
+                  </div>
+                )}
+                
+                {activeTab === 'tips' && (
+                  <div className="tips-container">
+                    <h2>Teaching Tips</h2>
+                    <p className="coming-soon">Teaching tips and strategies coming soon!</p>
+                    {/* Teaching tips component would be implemented here */}
                   </div>
                 )}
               </>
@@ -277,5 +381,7 @@ const Dashboard = () => {
     </div>
   );
 };
+
+export default Dashboard;
 
 export default Dashboard;

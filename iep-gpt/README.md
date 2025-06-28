@@ -15,6 +15,8 @@ Millions of students with neurodiverse conditions (like ADHD, autism, or dyslexi
 - **Progress Memory**: Save student profiles and plans, track progress, and adapt future plans based on what works
 - **Accessibility-Focused**: Clean, distraction-free UI with accessibility features like high contrast mode and large text
 - **Resource Library**: Curated educational resources and teaching strategies for various neurodiverse conditions
+- **Calendar View**: Visualize and manage the 7-day learning plan with drag-and-drop functionality
+- **Progress Tracking**: Monitor student engagement and completion of activities
 
 ## Tech Stack
 
@@ -39,7 +41,9 @@ Millions of students with neurodiverse conditions (like ADHD, autism, or dyslexi
 
 3. **Knowledge Enrichment**: Tavily Search enhances the plan with research-backed teaching methods and resources specific to the student's needs.
 
-4. **Progress Memory**: Plans are saved to Mem0 under the student's profile. Users can return anytime, update progress, and generate adapted plans based on what's working.
+4. **Progress Tracking**: Track student engagement and completion of activities throughout the week.
+
+5. **Plan Adaptation**: Generate new plans based on what worked well and what didn't, continuously improving the learning experience.
 
 ## Getting Started
 
@@ -56,15 +60,9 @@ git clone https://github.com/yourusername/iep-gpt.git
 cd iep-gpt
 ```
 
-2. Install dependencies for both client and server
+2. Run the setup script to install all dependencies
 ```bash
-# Install server dependencies
-cd server
-npm install
-
-# Install client dependencies
-cd ../client
-npm install
+node setup.js
 ```
 
 3. Set up environment variables
@@ -73,16 +71,38 @@ npm install
 
 4. Start the development servers
 ```bash
-# Start the backend server
-cd server
 npm run dev
-
-# In a new terminal, start the frontend
-cd client
-npm start
 ```
 
-5. Open your browser and navigate to `http://localhost:3000`
+5. If you encounter port conflicts, use the port utility script
+```bash
+node kill-port.js 5000
+```
+
+6. Open your browser and navigate to `http://localhost:3000`
+
+## New Features
+
+### Progress Tracker
+Track student engagement and completion of activities throughout the week. The progress tracker allows you to:
+- Mark activities as completed
+- Rate student engagement for each activity
+- Add notes about what worked and what didn't
+- Generate adapted plans based on progress data
+
+### Calendar View
+Visualize the 7-day learning plan in a calendar format. Features include:
+- Week-by-week navigation
+- Drag-and-drop functionality to reschedule activities
+- Edit activities directly from the calendar
+- Visual indicators for today's activities
+
+### Resource Library
+Access a curated library of educational resources and teaching strategies. Features include:
+- Filter resources by type, age group, and difficulty level
+- Search for specific topics or keywords
+- Save resources for later reference
+- View teaching strategies specific to the student's diagnosis
 
 ## Use Cases
 
@@ -91,42 +111,18 @@ npm start
 - **Special Education Specialists**: Supplement expertise with AI-generated plans and research-backed resources
 - **Educational NGOs**: Scale impact by providing personalized support to more neurodiverse students
 
-## Project Structure
+## Troubleshooting
 
-```
-iep-gpt/
-├── client/                     # React Frontend
-│   ├── public/
-│   │   └── index.html
-│   ├── src/
-│   │   ├── assets/             # Images, fonts, logos
-│   │   ├── components/         # Reusable React components
-│   │   ├── pages/              # Page-level components
-│   │   ├── services/           # API handlers (Axios)
-│   │   ├── styles/             # CSS files
-│   │   ├── App.js
-│   │   └── index.js
-│
-├── server/                     # Backend with Express/Node.js
-│   ├── controllers/            # Route logic
-│   ├── routes/                 # API endpoints
-│   ├── services/               # Groq, Tavily, Mem0 integrations
-│   ├── models/                 # DB schema
-│   ├── config/                 # API keys, env, DB configs
-│   ├── utils/                  # Helper functions
-│   ├── app.js                  # Express app setup
-│   └── server.js               # Entry point
-│
-├── .gitignore
-├── README.md
-└── package.json                # For root-level scripts
+### Port Already in Use
+If you see an error like `EADDRINUSE: address already in use :::5000`, run:
+```bash
+node kill-port.js 5000
 ```
 
-## Why It's Innovative
+This utility will identify and help you kill processes using port 5000.
 
-- **Personalization at scale**: AI enables customized learning plans for every student, not just a few.
-- **Inclusion-focused**: Prioritizes often-overlooked learners with neurodiverse needs.
-- **Memory + Search + Generation**: Combines Groq (fast LLM), Tavily (knowledge), and Mem0 (context memory) — a powerful trio.
+### API Connection Issues
+Make sure your API keys are correctly set in the `.env` file and that you have internet access to connect to the external APIs (Groq, Tavily, Mem0).
 
 ## License
 

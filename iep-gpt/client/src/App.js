@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import './styles/main.css';
+import './styles/components.css';
 
 function App() {
   return (
