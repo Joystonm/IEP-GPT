@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Loader = () => {
+const Loader = ({ message }) => {
   return (
     <div className="loader-container">
       <div className="loader"></div>
-      <p>Generating personalized IEP plan...</p>
+      <p className="loader-message">{message || 'Loading...'}</p>
     </div>
   );
 };

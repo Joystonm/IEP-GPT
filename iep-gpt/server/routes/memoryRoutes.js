@@ -18,3 +18,5 @@ router.post('/student/:id/progress', memoryController.updateStudentProgress);
 router.get('/search', memoryController.searchStudents);
 
 module.exports = router;
+// Delete student profile
+router.delete('/student/:id', memoryController.deleteStudentData);

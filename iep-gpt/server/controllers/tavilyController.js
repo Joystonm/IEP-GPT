@@ -1,19 +1,21 @@
 const tavilyService = require('../services/tavilyService');
 
-// Get educational resources based on student needs
+/**
+ * Get educational resources for a student
+ * @route GET /api/tavily/resources/:studentId
+ */
 exports.getResources = async (req, res) => {
   try {
-    const { studentId } = req.params;
     const { needs } = req.query;
     
     if (!needs) {
       return res.status(400).json({
         success: false,
-        message: 'Student needs must be specified'
+        message: 'Student needs are required'
       });
     }
     
-    // Search for relevant resources using Tavily
+    // Search for resources using Tavily
     const resources = await tavilyService.searchResources(needs);
     
     return res.status(200).json({
@@ -24,18 +26,28 @@ exports.getResources = async (req, res) => {
     console.error('Error fetching resources:', error);
     return res.status(500).json({
       success: false,
-      message: 'Failed to fetch educational resources',
-      error: error.message
+      message: 'Failed to fetch resources',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
 
-// Get specific teaching strategies for a learning challenge
+/**
+ * Get teaching strategies for a specific learning challenge
+ * @route GET /api/tavily/strategies/:challenge
+ */
 exports.getStrategies = async (req, res) => {
   try {
     const { challenge } = req.params;
     
-    // Search for teaching strategies using Tavily
+    if (!challenge) {
+      return res.status(400).json({
+        success: false,
+        message: 'Learning challenge is required'
+      });
+    }
+    
+    // Search for strategies using Tavily
     const strategies = await tavilyService.searchStrategies(challenge);
     
     return res.status(200).json({
@@ -46,8 +58,8 @@ exports.getStrategies = async (req, res) => {
     console.error('Error fetching strategies:', error);
     return res.status(500).json({
       success: false,
-      message: 'Failed to fetch teaching strategies',
-      error: error.message
+      message: 'Failed to fetch strategies',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };

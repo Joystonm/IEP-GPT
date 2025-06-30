@@ -1,0 +1,345 @@
+/* Progress Tracker Styles */
+.progress-tracker {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 2rem;
+}
+
+.tracker-description {
+  color: var(--dark-gray);
+  margin-bottom: 2rem;
+}
+
+.existing-progress-info,
+.auto-save-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: rgba(40, 167, 69, 0.1);
+  border-radius: 4px;
+  color: #28a745;
+  font-size: 0.9rem;
+}
+
+.auto-save-toggle {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.progress-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 250px;
+}
+
+.stat-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: var(--medium-gray);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.engagement-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.engagement-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.bar-label {
+  width: 70px;
+  font-size: 0.9rem;
+}
+
+.bar-container {
+  flex: 1;
+  height: 8px;
+  background-color: var(--medium-gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.engagement-bar.positive .bar-fill {
+  background-color: #28a745;
+}
+
+.engagement-bar.neutral .bar-fill {
+  background-color: #ffc107;
+}
+
+.engagement-bar.negative .bar-fill {
+  background-color: #dc3545;
+}
+
+.bar-value {
+  width: 30px;
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.progress-day {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.progress-day h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+
+.time-block-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.block-progress-item {
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  transition: box-shadow 0.2s ease;
+}
+
+.block-progress-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.block-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--medium-gray);
+}
+
+.block-time {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.block-subject {
+  font-weight: bold;
+}
+
+.block-activity {
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+}
+
+.block-progress-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.completion-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-text {
+  font-weight: 500;
+}
+
+.engagement-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rating-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rating-buttons button {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  background-color: white;
+  color: var(--text-color);
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.rating-buttons button:hover {
+  background-color: var(--light-gray);
+}
+
+.rating-buttons button.active {
+  border-width: 2px;
+}
+
+.rating-buttons button.active.positive {
+  background-color: rgba(40, 167, 69, 0.1);
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.rating-buttons button.active.neutral {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.rating-buttons button.active.negative {
+  background-color: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.block-notes textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 60px;
+  font-size: 0.9rem;
+}
+
+.overall-feedback {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+}
+
+.overall-feedback h3 {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+}
+
+.feedback-field {
+  margin-bottom: 1.5rem;
+}
+
+.feedback-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.feedback-field textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 80px;
+  font-size: 0.9rem;
+}
+
+.overall-rating {
+  margin-top: 1.5rem;
+}
+
+.overall-rating label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.rating-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.rating-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--dark-gray);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.generate-adapted-plan {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.feedback-message {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+.feedback-message.success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.feedback-message.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}

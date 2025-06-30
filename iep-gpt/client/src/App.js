@@ -5,6 +5,11 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import './styles/main.css';
 import './styles/components.css';
+import './styles/assessment.css';
+import './styles/cultural.css';
+import './styles/consultation.css';
+import './styles/calendar.css';
+import './styles/progress.css';
 
 function App() {
   return (

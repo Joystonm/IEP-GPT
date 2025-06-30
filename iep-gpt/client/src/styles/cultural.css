@@ -1,0 +1,388 @@
+/* Cultural Responsiveness Styles */
+
+.cultural-responsiveness {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  margin-bottom: 2rem;
+}
+
+.cultural-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.cultural-header h2 {
+  color: var(--primary-color);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cultural-description {
+  color: var(--dark-gray);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Tabs */
+.cultural-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--dark-gray);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab-button.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* Cultural Profile Form */
+.profile-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+/* Adaptations Section */
+.adaptations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.adaptations-header h3 {
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Adaptation Form */
+.adaptation-form {
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.adaptation-form h4 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--secondary-color);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Adaptations List */
+.adaptations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.adaptation-item {
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  position: relative;
+  border-left: 4px solid var(--primary-color);
+}
+
+.adaptation-item.content {
+  border-left-color: #4a6fa5;
+}
+
+.adaptation-item.teaching {
+  border-left-color: #4cb5ae;
+}
+
+.adaptation-item.assessment {
+  border-left-color: #f6ae2d;
+}
+
+.adaptation-item.communication {
+  border-left-color: #f26419;
+}
+
+.adaptation-item.environment {
+  border-left-color: #8338ec;
+}
+
+.adaptation-item.family {
+  border-left-color: #ff006e;
+}
+
+.adaptation-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.adaptation-content {
+  margin-bottom: 1rem;
+}
+
+.adaptation-original,
+.adaptation-adapted,
+.adaptation-rationale {
+  margin-bottom: 0.75rem;
+}
+
+.adaptation-arrow {
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+  margin: 0.5rem 0;
+}
+
+.adaptation-actions {
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  color: var(--dark-gray);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.icon-button.edit:hover {
+  color: var(--primary-color);
+}
+
+.icon-button.delete:hover {
+  color: var(--error-color);
+}
+
+.no-adaptations {
+  text-align: center;
+  padding: 3rem;
+  color: var(--dark-gray);
+}
+
+/* Suggestions Section */
+.suggestions-header {
+  margin-bottom: 2rem;
+}
+
+.suggestions-header h3 {
+  color: var(--secondary-color);
+  margin-bottom: 0.75rem;
+}
+
+.loading-suggestions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+}
+
+.loader {
+  border: 5px solid var(--light-gray);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.suggestions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.suggestion-item {
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  border-left: 4px solid var(--primary-color);
+}
+
+.suggestion-item.content {
+  border-left-color: #4a6fa5;
+}
+
+.suggestion-item.teaching {
+  border-left-color: #4cb5ae;
+}
+
+.suggestion-item.assessment {
+  border-left-color: #f6ae2d;
+}
+
+.suggestion-item.communication {
+  border-left-color: #f26419;
+}
+
+.suggestion-item.environment {
+  border-left-color: #8338ec;
+}
+
+.suggestion-item.family {
+  border-left-color: #ff006e;
+}
+
+.suggestion-category {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.suggestion-content {
+  margin-bottom: 1rem;
+}
+
+.suggestion-original,
+.suggestion-adapted,
+.suggestion-rationale {
+  margin-bottom: 0.75rem;
+}
+
+.suggestion-arrow {
+  font-size: 1.5rem;
+  color: var(--dark-gray);
+  margin: 0.5rem 0;
+}
+
+.suggestion-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.no-suggestions {
+  text-align: center;
+  padding: 3rem;
+  color: var(--dark-gray);
+}
+
+/* Info Box */
+.info-box {
+  background-color: rgba(74, 111, 165, 0.1);
+  border-left: 4px solid var(--primary-color);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.info-icon {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .adaptations-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .adaptation-actions {
+    position: static;
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+}

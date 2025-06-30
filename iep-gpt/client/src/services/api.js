@@ -7,7 +7,41 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 120000, // 2 minute timeout
 });
+
+// Add response interceptor for error handling
+api.interceptors.response.use(
+  response => response,
+  error => {
+    console.error('API Error:', error);
+    
+    // Create a more user-friendly error message
+    let errorMessage = 'An unexpected error occurred. Please try again.';
+    
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      if (error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      } else {
+        errorMessage = `Server error: ${error.response.status}`;
+      }
+    } else if (error.request) {
+      // The request was made but no response was received
+      errorMessage = 'No response from server. Please check your connection.';
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      errorMessage = error.message;
+    }
+    
+    // Create a new error with the friendly message
+    const enhancedError = new Error(errorMessage);
+    enhancedError.originalError = error;
+    
+    return Promise.reject(enhancedError);
+  }
+);
 
 /**
  * Generate a 7-day IEP plan based on student data
@@ -16,7 +50,9 @@ const api = axios.create({
  */
 export const generateIEPPlan = async (studentData) => {
   try {
+    console.log('Generating IEP plan for:', studentData.name);
     const response = await api.post('/iep/generate', studentData);
+    console.log('IEP plan generated successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error generating IEP plan:', error);
@@ -64,7 +100,9 @@ export const getTeachingStrategies = async (challenge) => {
  */
 export const saveStudentProfile = async (studentData) => {
   try {
+    console.log('Saving student profile:', studentData.name);
     const response = await api.post('/memory/save', studentData);
+    console.log('Student profile saved successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error saving student profile:', error);
@@ -79,7 +117,9 @@ export const saveStudentProfile = async (studentData) => {
  */
 export const getStudentProfile = async (studentId) => {
   try {
+    console.log('Fetching student profile:', studentId);
     const response = await api.get(`/memory/student/${studentId}`);
+    console.log('Student profile fetched successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error fetching student profile:', error);
@@ -93,7 +133,9 @@ export const getStudentProfile = async (studentId) => {
  */
 export const getStudentProfiles = async () => {
   try {
+    console.log('Fetching all student profiles');
     const response = await api.get('/memory/students');
+    console.log('Student profiles fetched successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error fetching student profiles:', error);
@@ -109,7 +151,9 @@ export const getStudentProfiles = async () => {
  */
 export const updateStudentProgress = async (studentId, progressData) => {
   try {
+    console.log('Updating student progress:', studentId);
     const response = await api.post(`/memory/student/${studentId}/progress`, progressData);
+    console.log('Student progress updated successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error updating student progress:', error);
@@ -124,7 +168,9 @@ export const updateStudentProgress = async (studentId, progressData) => {
  */
 export const generateAdaptedPlan = async (studentId) => {
   try {
+    console.log('Generating adapted plan for:', studentId);
     const response = await api.post(`/iep/adapt/${studentId}`);
+    console.log('Adapted plan generated successfully');
     return response.data.data;
   } catch (error) {
     console.error('Error generating adapted plan:', error);
@@ -133,3 +179,19 @@ export const generateAdaptedPlan = async (studentId) => {
 };
 
 export default api;
+/**
+ * Delete a student profile
+ * @param {string} studentId - Student ID
+ * @returns {Object} Response data
+ */
+export const deleteStudentProfile = async (studentId) => {
+  try {
+    console.log('Deleting student profile:', studentId);
+    const response = await api.delete(`/memory/student/${studentId}`);
+    console.log('Student profile deleted successfully');
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting student profile:', error);
+    throw error;
+  }
+};

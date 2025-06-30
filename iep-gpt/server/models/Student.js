@@ -1,49 +1,69 @@
-/**
- * Student model schema
- * Note: This is a placeholder for a database schema.
- * Implement with your preferred database (MongoDB, Firebase, etc.)
- */
+const mongoose = require('mongoose');
 
-class Student {
-  constructor(data) {
-    this.id = data.id;
-    this.name = data.name;
-    this.age = data.age;
-    this.grade = data.grade;
-    this.strengths = data.strengths;
-    this.challenges = data.challenges;
-    this.interests = data.interests;
-    this.accommodations = data.accommodations;
-    this.iepPlans = data.iepPlans || [];
-    this.createdAt = data.createdAt || new Date().toISOString();
-    this.updatedAt = data.updatedAt || new Date().toISOString();
+const StudentSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  grade: {
+    type: String,
+    required: true
+  },
+  needs: [{
+    type: String,
+    required: true
+  }],
+  strengths: [{
+    type: String
+  }],
+  interests: [{
+    type: String
+  }],
+  accommodations: [{
+    type: String
+  }],
+  learningStyle: {
+    visual: {
+      type: Number,
+      default: 0
+    },
+    auditory: {
+      type: Number,
+      default: 0
+    },
+    kinesthetic: {
+      type: Number,
+      default: 0
+    },
+    reading: {
+      type: Number,
+      default: 0
+    }
+  },
+  culturalBackground: {
+    language: {
+      type: String
+    },
+    traditions: [{
+      type: String
+    }],
+    values: [{
+      type: String
+    }]
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-  
-  // Example methods that would be implemented with actual database
-  
-  static async findById(id) {
-    // Implementation would depend on database choice
-    throw new Error('Not implemented');
-  }
-  
-  static async findByName(name) {
-    // Implementation would depend on database choice
-    throw new Error('Not implemented');
-  }
-  
-  async save() {
-    // Implementation would depend on database choice
-    throw new Error('Not implemented');
-  }
-  
-  async addIEPPlan(plan) {
-    this.iepPlans.push({
-      ...plan,
-      createdAt: new Date().toISOString()
-    });
-    this.updatedAt = new Date().toISOString();
-    return this.save();
-  }
-}
+});
 
-module.exports = Student;
+module.exports = mongoose.model('Student', StudentSchema);

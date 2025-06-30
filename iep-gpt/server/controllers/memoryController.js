@@ -16,8 +16,16 @@ exports.saveStudentData = async (req, res) => {
       });
     }
     
-    // Save student data using Mem0 service
-    const savedData = await mem0Service.saveStudentProfile(studentData);
+    // Check if this is an update or a new profile
+    let savedData;
+    
+    if (studentData.id) {
+      // Update existing profile
+      savedData = await mem0Service.updateStudentProfile(studentData.id, studentData);
+    } else {
+      // Create new profile
+      savedData = await mem0Service.saveStudentProfile(studentData);
+    }
     
     return res.status(201).json({
       success: true,
@@ -28,7 +36,7 @@ exports.saveStudentData = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to save student data',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
@@ -41,7 +49,7 @@ exports.getStudentData = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Retrieve student data using Mem0 service
+    // Retrieve student data
     const studentData = await mem0Service.getStudentProfile(id);
     
     if (!studentData) {
@@ -60,7 +68,7 @@ exports.getStudentData = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to retrieve student data',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
@@ -71,7 +79,7 @@ exports.getStudentData = async (req, res) => {
  */
 exports.getAllStudents = async (req, res) => {
   try {
-    // Get all student profiles from Mem0
+    // Get all student profiles
     const students = await mem0Service.getAllStudentProfiles();
     
     return res.status(200).json({
@@ -83,7 +91,7 @@ exports.getAllStudents = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to retrieve student profiles',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
@@ -98,10 +106,10 @@ exports.updateStudentProgress = async (req, res) => {
     const progressData = req.body;
     
     // Validate progress data
-    if (!progressData || !progressData.weeklyProgress) {
+    if (!progressData) {
       return res.status(400).json({
         success: false,
-        message: 'Weekly progress data is required'
+        message: 'Progress data is required'
       });
     }
     
@@ -118,7 +126,7 @@ exports.updateStudentProgress = async (req, res) => {
     // Update student data with progress
     const updatedData = {
       ...studentData,
-      progressHistory: [...(studentData.progressHistory || []), progressData],
+      progressData: progressData,
       lastUpdated: new Date().toISOString()
     };
     
@@ -134,13 +142,13 @@ exports.updateStudentProgress = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to update student progress',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
 
 /**
- * Search for student profiles by name
+ * Search for students by name
  * @route GET /api/memory/search
  */
 exports.searchStudents = async (req, res) => {
@@ -166,7 +174,31 @@ exports.searchStudents = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to search for students',
-      error: error.message
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+};
+/**
+ * Delete student profile
+ * @route DELETE /api/memory/student/:id
+ */
+exports.deleteStudentData = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Delete student data
+    await mem0Service.deleteStudentProfile(id);
+    
+    return res.status(200).json({
+      success: true,
+      message: 'Student profile deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting student data:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Failed to delete student data',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
